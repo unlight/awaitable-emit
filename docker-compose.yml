@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    ports:
+      - '2181:2181'
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    ports:
+      - '9092:9092' # Expose Kafka on port 9092
+      - '29092:29092' # Internal communication port for Docker network
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181' # Connect to ZooKeeper
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092' # Define advertised listeners with different ports
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT' # Map protocols
+      KAFKA_LISTENERS: 'PLAINTEXT://0.0.0.0:29092,PLAINTEXT_HOST://0.0.0.0:9092' # Listen on all interfaces with different ports
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    ports:
+      - '8080:8080' # Expose Kafka UI on port 8080
+    environment:
+      KAFKA_CLUSTERS_0_NAME: 'Local Cluster' # Name for the cluster in the UI
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: 'kafka:29092' # Connect to Kafka service using internal port
+      DYNAMIC_CONFIG_ENABLED: 'true' # Enable dynamic configuration
+
+networks:
+  default:
+    driver: bridge
