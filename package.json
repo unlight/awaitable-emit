@@ -18,9 +18,8 @@
   },
   "scripts": {
     "start:app": "ts-node app/main.ts",
-    "test": "npm run eslint && npm run tscheck && npm run test:cov",
+    "test": "npm run eslint && npm run tscheck && npm run test:e2e",
     "test:r": "npm run mocha -- src/**/*.spec.ts",
-    "test:cov": "c8 --reporter text --exclude \"**/*.spec.ts\" --exclude \"**/testing/**\" npm run test:r -- --no-timeouts",
     "test:w": "npm run test:r -- --watch-files src --watch",
     "lint": "npm run eslint && npm run tscheck",
     "eslint": "node node_modules/eslint/bin/eslint \"src/**/*.{ts,tsx}\"",
@@ -31,8 +30,8 @@
     "build": "sh Taskfile buildMicrobundle4",
     "lint:w": "run-p tscheck:w eslint:w",
     "mocha": "node -r ts-node/register node_modules/mocha/bin/mocha",
-    "test:e2e": "npm run mocha -- src/app.e2e-spec.ts",
-    "test:e2e:w": "npm run mocha -- src/app.e2e-spec.ts --watch"
+    "test:e2e": "npm run mocha -- app/app.e2e-spec.ts",
+    "test:e2e:w": "npm run mocha -- app/app.e2e-spec.ts --watch"
   },
   "peerDependencies": {
     "@nestjs/common": "8 - 10",

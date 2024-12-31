@@ -1,7 +1,6 @@
 node_modules
 dist
 *.log
-coverage
 ~*
 *.sublime-project
 *.sublime-workspace

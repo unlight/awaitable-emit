@@ -12,13 +12,7 @@ export default [
   ...tseslint.configs.recommendedTypeChecked,
   prettier,
   {
-    ignores: [
-      'dist/',
-      'coverage/',
-      '@generated/**',
-      '*.config.[cm]js',
-      '.*rc.js',
-    ],
+    ignores: ['dist/', '@generated/**', '*.config.[cm]js', '.*rc.js'],
     languageOptions: {
       globals: globals.node,
       parserOptions: {
