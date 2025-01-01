@@ -2,6 +2,11 @@
   "name": "awaitable-emit",
   "version": "0.0.0-dev",
   "license": "MIT",
+  "description": "Emit message to kafka and wait while nestjs process it.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unlight/awaitable-emit.git"
+  },
   "keywords": [
     "nestjs",
     "kafka"

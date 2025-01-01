@@ -10,7 +10,7 @@ buildMicrobundle4() {
   cp -v README.md package.json dist
   cd dist
   mv "$name.js" "$name.cjs"
-  mv index.d.ts "$name.d.ts"
+  # mv index.d.ts "$name.d.ts"
   cat ../package.json | jq --arg name "$name" '
     .main = "./\($name).cjs" |
     .module = "./\($name).mjs" |

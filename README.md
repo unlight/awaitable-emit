@@ -15,7 +15,7 @@ Create helper utils for end to end test:
 1. Create helper objects
 
 ```ts
-const { emitMessage, AwaitableEmitInterceptor, dispose } = createAwaitableEmit(...)`
+const { emitMessage, AwaitableEmitInterceptor, dispose } = createAwaitableEmit(options)`
 ```
 
 2. Add interceptor to nestjs app
@@ -24,8 +24,15 @@ const { emitMessage, AwaitableEmitInterceptor, dispose } = createAwaitableEmit(.
 app.useGlobalInterceptors(new AwaitableEmitInterceptor());
 ```
 
-3. Use `emitMessage` in tests
+3. Use `emitMessage` in test
 4. Run `dispose` in 'after all' stage
+
+### Options
+
+`getKafkaClient: () => ClientKafka` Factory function which returns kafka client instance  
+`wait?: number` Wait time in milliseconds (if controller cannot handle message in this time, promise will be resolved)  
+`brokers?: string[]` Kafka brokers, this is optional and uses kafka admin under the hood - waits when all consumners groups will have no lag
+(this may or may not be useful for parallel running tests)
 
 ### Example
 
@@ -52,7 +59,6 @@ describe('AppController (e2e)', () => {
   const { emitMessage, AwaitableEmitInterceptor, dispose } =
     createAwaitableEmit({
       getKafkaClient: () => clientKafka,
-      brokers: ['127.0.0.1:9092'],
     });
 
   // Before all
