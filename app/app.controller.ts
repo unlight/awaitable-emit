@@ -10,7 +10,7 @@ export class AppController {
   @EventPattern('user-created')
   async handleEntityCreated(@Payload() payload: object) {
     console.log('user created', payload);
-    await setTimeout(400);
+    await setTimeout(2000); // Imitate long running process
     this.appService.shared.push(payload);
   }
 }

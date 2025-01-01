@@ -28,11 +28,12 @@ interface CreateAwaitableEmitArgs {
 
 /**
  * Create helper utils:
- * emitMessage - function to emit message to kafka,
- * AwaitableEmitInterceptor - nestjs global interceptor (required for emitMessage).
+ * emitMessage - function to emit message to kafka
+ * AwaitableEmitInterceptor - nestjs global interceptor (required for emitMessage)
+ * dispose - function to run on tear down stage
  */
 export function createAwaitableEmit(args: CreateAwaitableEmitArgs) {
-  const { getKafkaClient, brokers, wait = 4000 } = args;
+  const { getKafkaClient, brokers, wait = 5000 } = args;
   const emitter = new EventEmitter();
 
   const createEventName = (messageId: string): string =>
@@ -139,5 +140,14 @@ export function createAwaitableEmit(args: CreateAwaitableEmitArgs) {
     }
   }
 
-  return { AwaitableEmitInterceptor, emitMessage, emitRetryableMessage };
+  async function dispose() {
+    await admin?.disconnect();
+  }
+
+  return {
+    AwaitableEmitInterceptor,
+    emitMessage,
+    emitRetryableMessage,
+    dispose,
+  };
 }
