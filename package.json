@@ -8,8 +8,12 @@
     "url": "git+https://github.com/unlight/awaitable-emit.git"
   },
   "keywords": [
+    "testing",
+    "microservices",
+    "kafka",
+    "end-to-end-testing",
     "nestjs",
-    "kafka"
+    "nestjs-testing"
   ],
   "type": "commonjs",
   "main": "./dist/index.cjs",
